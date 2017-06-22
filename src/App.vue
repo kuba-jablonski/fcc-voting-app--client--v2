@@ -1,12 +1,16 @@
 <template>
     <div id="app">
-    
+        <app-nav></app-nav>
     </div>
 </template>
 
 <script>
-export default {
+import Nav from './components/Nav.vue';
 
+export default {
+    components: {
+        appNav: Nav
+    }
 }
 </script>
 
