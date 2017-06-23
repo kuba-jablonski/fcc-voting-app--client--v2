@@ -51,6 +51,9 @@
 import DoughnutChart from './chart';
 
 export default {
+    created() {
+        this.$store.commit('getRandomColors', this.poll.options.length);
+    },
     data() {
         return {
             selectedOption: '',

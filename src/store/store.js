@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
             showSignup: false
         },
         polls: null,
-        user: null
+        user: null,
+        colors: []
     },
     getters: {
         pollChartData: state => id => {
@@ -18,7 +19,7 @@ export const store = new Vuex.Store({
                 labels: [],
                 datasets: [{
                     label: 'Votes',
-                    backgroundColor: ['red', 'blue', 'green', 'yellow'],
+                    backgroundColor: state.colors,
                     data: []
                 }]
             };
@@ -54,6 +55,12 @@ export const store = new Vuex.Store({
         },
         logoutUser(state) {
             state.user = null;
+        },
+        getRandomColors(state, n) {
+            state.colors = [];
+            for (let i = 0; i < n; i++) {
+                state.colors.push('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6))
+            }
         }
     },
     actions: {

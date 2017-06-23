@@ -1,22 +1,24 @@
 <template>
     <nav class="nav has-shadow">
         <div class="nav-left">
-            <a class="nav-item">
-                <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
-            </a>
+            <p class="nav-item is-unselectable">
+                <img src="../assets/napstalogo-small.png" alt="napstalogo">
+                Voting App
+            </p>
         </div>
     
         <div class="nav-center">
-            <a class="nav-item">
+            <a href="https://github.com/kuba-jablonski/fcc-voting-app--client--v2" class="nav-item">
                 <span class="icon">
                     <i class="fa fa-github"></i>
                 </span>
+                napstablook
             </a>
-            <a class="nav-item">
+            <!--<a class="nav-item">
                 <span class="icon">
                     <i class="fa fa-twitter"></i>
                 </span>
-            </a>
+            </a>-->
         </div>
     
         <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
@@ -40,7 +42,7 @@
             <div v-if="!$store.state.user" class="nav-item">
                 <div class="field is-grouped">
                     <p class="control">
-                        <a @click="$store.commit('showLogin')" class="button">
+                        <a @click="$store.commit('showLogin')" class="button is-primary">
                             <span class="icon">
                                 <i class="fa fa-sign-in"></i>
                             </span>
@@ -48,7 +50,7 @@
                         </a>
                     </p>
                     <p class="control">
-                        <a @click="$store.commit('showSignup')" class="button">
+                        <a @click="$store.commit('showSignup')" class="button is-primary">
                             <span class="icon">
                                 <i class="fa fa-user-plus"></i>
                             </span>
@@ -61,7 +63,7 @@
             <div v-else class="nav-item">
                 <div class="field is-grouped">
                     <p class="control">
-                        <a :class="{'is-loading': loading}" @click="logOut" class="button">
+                        <a :class="{'is-loading': loading}" @click="logOut" class="button is-primary">
                             <span class="icon">
                                 <i class="fa fa-sign-out"></i>
                             </span>

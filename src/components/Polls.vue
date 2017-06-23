@@ -4,13 +4,22 @@
             <div class="tile is-ancestor">
                 <router-link :to="`/poll/${poll._id}`" class="tile is-parent is-6" v-for="poll in polls" :key="poll._id">
                     <article class="tile is-child box">
-                        <div class="columns">
-                            <div class="column is-8">
+                        <div class="level">
+                            <div class="level-item">
                                 <p class="title is-3">{{poll.question}}</p>
-                                <p>{{poll.totalVotes}} votes</p>
                             </div>
-                            <div class="column is-4">
-                                
+                        </div>
+                        <br><br>
+                        <div class="columns is-mobile">
+                            <div class="column is-half">
+                                <div class="level-left level-item">
+                                    <p>{{poll.totalVotes}} votes</p>
+                                </div>
+                            </div>
+                            <div class="column is-half">
+                                <div class="level-right level-item">
+                                    <p>posted by {{poll.creatorName}}</p>
+                                </div>  
                             </div>
                         </div>
                     </article>

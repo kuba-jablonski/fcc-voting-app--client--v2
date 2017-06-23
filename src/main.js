@@ -16,7 +16,7 @@ const router = new VueRouter({
 
 store.dispatch('getPolls').then((response) => {
     store.commit('getPolls', response.body);
-
+    
     new Vue({
         el: '#app',
         store, router,
