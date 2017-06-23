@@ -9,7 +9,7 @@
                         </p>
                         <a 
                             v-for="option in poll.options" 
-                            @click="selectedOption = option._id" :
+                            @click="selectedOption = option._id" 
                             :key="option._id" 
                             :class="{'is-active': option._id === selectedOption}" 
                             class="panel-block">
@@ -40,7 +40,7 @@
                     </nav>
                 </div>
                 <div class="column is-4 is-offset-1">
-                    <doughnut-chart :chart-data="datacollection"></doughnut-chart>
+                    <doughnut-chart :chart-data="$store.getters.pollChartData($route.params.id)"></doughnut-chart>
                 </div>
             </div>
         </div>
@@ -57,26 +57,6 @@ export default {
         }
     },
     computed: {
-        datacollection() {
-            let datacollection = {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'Votes',
-                        backgroundColor: ['red'],
-                        data: []
-                    }
-                ]
-            };
-
-            this.poll.options
-                .forEach(option => {
-                    datacollection.labels.push(option.option);
-                    datacollection.datasets[0].data.push(option.votes);
-                });
-
-            return datacollection;
-        },
         poll() {
             return this.$store.state.polls
                 .find(poll => poll._id === this.$route.params.id);
@@ -99,12 +79,6 @@ export default {
 </script>
 
 <style scoped>
-/*input[type="radio"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-}*/
+
 </style>
 
