@@ -24,5 +24,7 @@ export default {
 </script>
 
 <style>
-
+.is-ancestor {
+    flex-wrap: wrap;
+}
 </style>
