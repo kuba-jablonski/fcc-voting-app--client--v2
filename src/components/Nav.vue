@@ -1,10 +1,10 @@
 <template>
     <nav class="nav has-shadow">
         <div class="nav-left">
-            <p class="nav-item is-unselectable">
+            <router-link to="/" tag="a" class="nav-item is-active">
                 <img src="../assets/napstalogo-small.png" alt="napstalogo">
                 Voting App
-            </p>
+            </router-link>
         </div>
     
         <div class="nav-center">
@@ -33,7 +33,7 @@
         <!-- Add the modifier "is-active" to display it on mobile -->
         <div :class="{'is-active': showDropdown}" class="nav-right nav-menu">
 
-            <router-link to="/" tag="a" class="nav-item" active-class="is-active" exact>Home</router-link>
+            <router-link to="/" tag="a" class="nav-item" active-class="is-active" exact>Polls</router-link>
             <!--<a v-if="$store.state.user" class="nav-item">
                 Create Poll
             </a>-->

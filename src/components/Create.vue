@@ -2,7 +2,7 @@
     <main class="section">
         <div class="container">
             <h1 class="title">Create a new poll</h1>
-            <form>
+            
                 <div class="field">
                     <p class="control">
                         <input v-model="title" class="input is-medium" type="text" placeholder="Title">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="field is-grouped">
                     <p class="control is-expanded">
-                        <input v-model="additionalOption" class="input" type="text" placeholder="Additional option(s)">
+                        <input v-model="additionalOption" @keyup.enter="addOption" class="input" type="text" placeholder="Additional option(s)">
                     </p>
                     <p class="control">
                         <a @click="addOption" class="button">
@@ -41,7 +41,7 @@
                         <button @click.prevent="$router.push('/')" class="button is-link">Cancel</button>
                     </p>
                 </div>
-            </form>
+            
         </div>
     </main>
 </template>
