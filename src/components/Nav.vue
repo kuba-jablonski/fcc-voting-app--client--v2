@@ -8,7 +8,7 @@
         </div>
     
         <div class="nav-center">
-            <a href="https://github.com/kuba-jablonski/fcc-voting-app--client--v2" class="nav-item">
+            <a href="https://github.com/kuba-jablonski/fcc-voting-app--client--v2" target="_blank" class="nav-item">
                 <span class="icon">
                     <i class="fa fa-github"></i>
                 </span>
