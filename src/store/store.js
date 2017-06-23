@@ -37,9 +37,10 @@ export const store = new Vuex.Store({
     },
     actions: {
         getPolls({commit}) {
-            Vue.http.get('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls')
-                .then(response => commit('getPolls', response.body))
-                .catch(e => console.log(e));
+            return new Promise((resolve, reject) => {
+                Vue.http.get('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls')
+                    .then(response => resolve(response), e => reject(e));
+            })
         },
         signupUser({commit}, credentials) {
             Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users', credentials)
@@ -60,11 +61,10 @@ export const store = new Vuex.Store({
                 .catch(e => console.log(e));   
         },
         logoutUser({commit}) {
-            Vue.http.delete('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/me/token')
-                .then(response => {
-                    Vue.http.headers.common['x-auth'] = null;
-                    commit('logoutUser');
-                }).catch(e => console.log(e));
+            return new Promise((resolve, reject) => {
+                Vue.http.delete('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/me/token')
+                    .then(response => resolve(response), e => reject(e));
+            })
         }     
     }
 });

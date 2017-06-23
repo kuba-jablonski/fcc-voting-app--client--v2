@@ -1,14 +1,16 @@
 <template>
-    <div class="container">
-        <div class="tile is-ancestor">
-            <div class="tile is-parent is-4" v-for="poll in polls" :key="poll._id">
-                <article class="tile is-child box">
-                    <p class="title is-4">{{poll.question}}</p>
-                    <p class="subtitle is-6">{{poll.totalVotes}} votes</p>
-                </article>
+    <main class="section">
+        <div class="container">
+            <div class="tile is-ancestor">
+                <router-link :to="`/poll/${poll._id}`" class="tile is-parent is-6" v-for="poll in polls" :key="poll._id">
+                    <article class="tile is-child box">
+                        <p class="title is-4">{{poll.question}}</p>
+                        <p class="subtitle is-6">{{poll.totalVotes}} votes</p>
+                    </article>
+                </router-link>
             </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -17,9 +19,6 @@ export default {
         polls() {
             return this.$store.state.polls;
         }
-    },
-    created() {
-        this.$store.dispatch('getPolls');
     }
 }
 </script>

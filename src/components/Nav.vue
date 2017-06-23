@@ -30,12 +30,12 @@
         <!-- This "nav-menu" is hidden on mobile -->
         <!-- Add the modifier "is-active" to display it on mobile -->
         <div :class="{'is-active': showDropdown}" class="nav-right nav-menu">
-            <a class="nav-item is-active">
-                Home
-            </a>
-            <a v-if="$store.state.user" class="nav-item">
+
+            <router-link to="/" tag="a" class="nav-item" active-class="is-active" exact>Home</router-link>
+            <!--<a v-if="$store.state.user" class="nav-item">
                 Create Poll
-            </a>
+            </a>-->
+            <router-link v-if="$store.state.user" to="/create" tag="a" class="nav-item" active-class="is-active" exact>Create Poll</router-link>
     
             <div v-if="!$store.state.user" class="nav-item">
                 <div class="field is-grouped">
@@ -85,7 +85,14 @@ export default {
     },
     methods: {
         logOut() {
-            this.$store.dispatch('logoutUser');
+            this.loading = true;
+            this.$store.dispatch('logoutUser')
+                .then(response => {
+                    this.$http.headers.common['x-auth'] = null;
+                    this.$store.commit('logoutUser');
+                    this.loading = false;
+                })
+                .catch(e => console.log(e));
         }
     }
 }
