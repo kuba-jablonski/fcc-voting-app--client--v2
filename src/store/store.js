@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
             showLogin: false,
             showSignup: false
         },
-        polls: null
+        polls: null,
+        user: null
     },
     mutations: {
         showLogin(state) {
@@ -26,6 +27,12 @@ export const store = new Vuex.Store({
         },
         getPolls(state, polls) {
             state.polls = polls;
+        },
+        getUser(state, user) {
+            state.user = user;
+        },
+        logoutUser(state) {
+            state.user = null;
         }
     },
     actions: {
@@ -33,6 +40,31 @@ export const store = new Vuex.Store({
             Vue.http.get('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls')
                 .then(response => commit('getPolls', response.body))
                 .catch(e => console.log(e));
-        }
+        },
+        signupUser({commit}, credentials) {
+            Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users', credentials)
+                .then(response => {
+                    Vue.http.headers.common['x-auth'] = response.headers.map['X-Auth'][0];
+                    commit('getUser', response.body);
+                    commit('hideSignup');
+                })
+                .catch(e => console.log(e));
+        },
+        loginUser({commit}, credentials) {
+            Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/login', credentials)
+                .then(response => {
+                    Vue.http.headers.common['x-auth'] = response.headers.map['X-Auth'][0];
+                    commit('getUser', response.body);
+                    commit('hideLogin');
+                })
+                .catch(e => console.log(e));   
+        },
+        logoutUser({commit}) {
+            Vue.http.delete('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/me/token')
+                .then(response => {
+                    Vue.http.headers.common['x-auth'] = null;
+                    commit('logoutUser');
+                }).catch(e => console.log(e));
+        }     
     }
 });

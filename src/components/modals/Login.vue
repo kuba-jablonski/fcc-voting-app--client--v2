@@ -7,7 +7,7 @@
                 <form>
                     <div class="field">
                         <p class="control has-icons-left">
-                            <input class="input" type="text" placeholder="Username">
+                            <input v-model="username" class="input" type="text" placeholder="Username">
                             <span class="icon is-small is-left">
                                 <i class="fa fa-user"></i>
                             </span>
@@ -15,7 +15,7 @@
                     </div>
                     <div class="field">
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Password">
+                            <input v-model="password" class="input" type="password" placeholder="Password">
                             <span class="icon is-small is-left">
                                 <i class="fa fa-lock"></i>
                             </span>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="field is-grouped">
                         <p class="control">
-                            <button class="button is-primary">Submit</button>
+                            <button :class="{'is-loading': loading}" @click.prevent="logIn" class="button is-primary">Submit</button>
                         </p>
                         <p class="control">
                             <button @click.prevent="$store.commit('hideLogin')" class="button is-link">Cancel</button>
@@ -37,7 +37,22 @@
 
 <script>
 export default {
-
+    data() {
+        return {
+            username: '',
+            password: '',
+            loading: false
+        }
+    },
+    methods: {
+        logIn() {
+            this.loading = true;
+            this.$store.dispatch('loginUser', {
+                name: this.username,
+                password: this.password
+            });
+        }
+    }
 }
 </script>
 

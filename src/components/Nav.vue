@@ -33,11 +33,11 @@
             <a class="nav-item is-active">
                 Home
             </a>
-            <a class="nav-item">
+            <a v-if="$store.state.user" class="nav-item">
                 Create Poll
             </a>
     
-            <div class="nav-item">
+            <div v-if="!$store.state.user" class="nav-item">
                 <div class="field is-grouped">
                     <p class="control">
                         <a @click="$store.commit('showLogin')" class="button">
@@ -57,6 +57,20 @@
                     </p>
                 </div>
             </div>
+
+            <div v-else class="nav-item">
+                <div class="field is-grouped">
+                    <p class="control">
+                        <a :class="{'is-loading': loading}" @click="logOut" class="button">
+                            <span class="icon">
+                                <i class="fa fa-sign-out"></i>
+                            </span>
+                            <span>Logout</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+
         </div>
     </nav>
 </template>
@@ -65,7 +79,13 @@
 export default {
     data() {
         return {
-            showDropdown: false
+            showDropdown: false,
+            loading: false
+        }
+    },
+    methods: {
+        logOut() {
+            this.$store.dispatch('logoutUser');
         }
     }
 }
