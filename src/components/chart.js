@@ -7,7 +7,7 @@ export default Doughnut.extend({
     mounted() {
         this.renderChart(this.chartData, {
             legend: {
-                position: 'bottom'
+                position: 'right'
             },
             responsive: true,
             maintainAspectRatio: false

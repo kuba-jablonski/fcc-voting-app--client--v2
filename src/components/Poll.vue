@@ -39,7 +39,7 @@
                         </div>
                     </nav>
                 </div>
-                <div class="column is-4 is-offset-1">
+                <div class="column is-6">
                     <doughnut-chart :chart-data="$store.getters.pollChartData($route.params.id)"></doughnut-chart>
                 </div>
             </div>
