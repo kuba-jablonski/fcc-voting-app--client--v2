@@ -65,15 +65,22 @@ export default {
         submitPoll() {
             this.loading = true;
             let pollId;
+            const title = this.title.trim();
             const options = [...this.options, ...this.additionalOptions]
-                .filter(value => value != '')
+                .filter(value =>{
+                    return value.trim() != ''
+                })
                 .map(value => {
                     return { option: value }
                 });
 
+            if (title == '' || options.length < 2) {
+                this.loading = false;
+                return;
+            } 
 
             this.$http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls', {
-                question: this.title,
+                question: title,
                 options: options
             }).then((response) => {
                 pollId = response.body._id;
