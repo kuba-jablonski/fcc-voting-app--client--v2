@@ -21,6 +21,12 @@
                             </span>
                         </p>
                     </div>
+
+                    <div v-if="error.show" class="notification is-danger">
+                        <button @click="error.show = false" class="delete"></button>
+                        {{ error.content }}
+                    </div>
+
                     <div class="field is-grouped">
                         <p class="control">
                             <button :class="{'is-loading': loading}" @click.prevent="logIn" class="button is-primary">Submit</button>
@@ -41,7 +47,11 @@ export default {
         return {
             username: '',
             password: '',
-            loading: false
+            loading: false,
+            error: {
+                show: false,
+                content: ''
+            }
         }
     },
     methods: {
@@ -50,6 +60,10 @@ export default {
             this.$store.dispatch('loginUser', {
                 name: this.username,
                 password: this.password
+            }).catch(e => {
+                this.loading = false;
+                this.error.show = true;
+                this.error.content = 'Username or password are incorrect.'
             });
         }
     }

@@ -64,9 +64,7 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
-        getPolls({
-            commit
-        }) {
+        getPolls({commit}) {
             return new Promise((resolve, reject) => {
                 Vue.http.get('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls')
                     .then(response => resolve(response), e => reject(e));
@@ -87,23 +85,24 @@ export const store = new Vuex.Store({
                         }
                         reject(response);
                     });
-            })
-
+            });
         },
-        loginUser({
-            commit
-        }, credentials) {
-            Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/login', credentials)
-                .then(response => {
-                    Vue.http.headers.common['x-auth'] = response.headers.map['X-Auth'][0];
-                    commit('getUser', response.body);
-                    commit('hideLogin');
-                })
-                .catch(e => console.log(e));
+        loginUser({commit}, credentials) {
+            return new Promise((resolve, reject) => {
+                Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/login', credentials)
+                    .then(response => {
+                        Vue.http.headers.common['x-auth'] = response.headers.map['X-Auth'][0];
+                        commit('getUser', response.body);
+                        commit('hideLogin');
+                        resolve();
+                    })
+                    .catch(response => {
+                        console.log(response);
+                        reject(response);
+                    });
+            });
         },
-        logoutUser({
-            commit
-        }) {
+        logoutUser({commit}) {
             return new Promise((resolve, reject) => {
                 Vue.http.delete('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users/me/token')
                     .then(response => resolve(response), e => reject(e));
