@@ -72,16 +72,23 @@ export const store = new Vuex.Store({
                     .then(response => resolve(response), e => reject(e));
             })
         },
-        signupUser({
-            commit
-        }, credentials) {
-            Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users', credentials)
-                .then(response => {
-                    Vue.http.headers.common['x-auth'] = response.headers.map['X-Auth'][0];
-                    commit('getUser', response.body);
-                    commit('hideSignup');
-                })
-                .catch(e => console.log(e));
+        signupUser({commit}, credentials) {
+            return new Promise((resolve, reject) => {
+                Vue.http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/users', credentials)
+                    .then(response => {
+                        Vue.http.headers.common['x-auth'] = response.headers.map['X-Auth'][0];
+                        commit('getUser', response.body);
+                        commit('hideSignup');
+                        resolve();
+                    })
+                    .catch(response => {
+                        if (response.body.code === 11000) {
+                            reject('User already exists');
+                        }
+                        reject(response);
+                    });
+            })
+
         },
         loginUser({
             commit
