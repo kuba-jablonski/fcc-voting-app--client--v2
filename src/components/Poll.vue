@@ -1,7 +1,8 @@
 <template>
     <main class="section">
         <div class="container">
-            <div class="columns">
+            <h1 v-if="!poll" class="title is-4 has-text-centered">This poll does not exist.</h1>
+            <div v-else class="columns">
                 <div class="column is-6">
                     <nav class="panel">
                         <p class="panel-heading">

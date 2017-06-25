@@ -14,6 +14,7 @@ import Signup from './components/modals/Signup.vue';
 import Polls from './components/Polls.vue';
 import Poll from './components/Poll.vue';
 import Create from './components/Create.vue';
+import NotFound from './components/NotFound.vue'
 
 export default {
     components: {
