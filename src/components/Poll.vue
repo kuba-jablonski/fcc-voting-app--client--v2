@@ -38,6 +38,11 @@
                                 Submit your vote!
                             </button>
                         </div>
+                        <div v-if="$store.state.user && poll.creatorName === $store.state.user.name" class="panel-block">
+                            <button @click="deletePoll" class="button is-danger is-outlined is-fullwidth">
+                                Delete this poll.
+                            </button>
+                        </div>
                     </nav>
                 </div>
                 <div class="column is-6">
@@ -71,6 +76,13 @@ export default {
             this.$http.patch(`https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls/${this.$route.params.id}/${this.selectedOption}`)
                 .then(response => {
                     this.$store.commit('getPolls', response.body);
+                }).catch(e => console.log(e));
+        },
+        deletePoll() {
+            this.$http.delete(`https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls/me/${this.$route.params.id}`)
+                .then(response => {
+                    this.$store.commit('getPolls', response.body);
+                    this.$router.push('/');
                 }).catch(e => console.log(e));
         }
     },
