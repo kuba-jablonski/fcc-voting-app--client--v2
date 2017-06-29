@@ -93,13 +93,10 @@ export default {
             this.$http.post('https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls', {
                 question: title,
                 options: options
-            }).then((response) => {
-                pollId = response.body._id;
-                return this.$store.dispatch('getPolls');
             }).then(response => {
                 this.$store.commit('getPolls', response.body);
                 this.loading = false;
-                this.$router.push(`/poll/${pollId}`);
+                this.$router.push('/');
             }).catch(e => console.log(e));
         }
     }
