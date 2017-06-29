@@ -18,7 +18,7 @@
                         <input v-model="options[1]" class="input" type="text" placeholder="Second option">
                     </p>
                 </div>
-                <div v-for="(option, i) in additionalOptions" class="field">
+                <div v-for="(option, i) in additionalOptions" :key="i" class="field">
                     <p class="control">
                         <input v-model="additionalOptions[i]" class="input" type="text" placeholder="Additional option">
                     </p>
@@ -41,6 +41,11 @@
                         <button @click.prevent="$router.push('/')" class="button is-link">Cancel</button>
                     </p>
                 </div>
+
+                <div v-if="error.show" class="notification is-danger">
+                    <button @click="error.show = false" class="delete"></button>
+                    {{ error.content }}
+                </div>                
             
         </div>
     </main>
@@ -54,7 +59,11 @@ export default {
             options: ['', ''],
             additionalOption: '',
             additionalOptions: [],
-            loading: false
+            loading: false,
+            error: {
+                show: false,
+                content: ''
+            }
         }
     },
     methods: {
@@ -75,6 +84,8 @@ export default {
                 });
 
             if (title == '' || options.length < 2) {
+                this.error.show = true;
+                this.error.content = 'Poll needs a title and 2 or more options.';
                 this.loading = false;
                 return;
             } 
