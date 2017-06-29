@@ -13,8 +13,8 @@
                             @click="selectedOption = option._id" 
                             :key="option._id" 
                             :class="{'is-active': option._id === selectedOption}" 
-                            class="panel-block">
-                            <!--<input v-model="selectedOption" :value="option._id" type="radio">-->
+                            class="panel-block"
+                        >
                             <span class="panel-icon">
                                 <i :class="{
                                     'fa-circle-o': !(option._id === selectedOption),
@@ -69,9 +69,7 @@ export default {
     methods: {
         submitVote() {
             this.$http.patch(`https://cors-anywhere.herokuapp.com/http://voteserver.herokuapp.com/polls/${this.$route.params.id}/${this.selectedOption}`)
-                .then((response) => {
-                    return this.$store.dispatch('getPolls');
-                }).then(response => {
+                .then(response => {
                     this.$store.commit('getPolls', response.body);
                 }).catch(e => console.log(e));
         }
