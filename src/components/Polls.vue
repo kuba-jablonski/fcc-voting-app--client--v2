@@ -1,7 +1,7 @@
 <template>
     <main class="section">
         <div class="container">
-            <div class="tile is-ancestor">
+            <div v-if="polls" class="tile is-ancestor">
                 <router-link :to="`/poll/${poll._id}`" class="tile is-parent is-6" v-for="poll in polls" :key="poll._id">
                     <article class="tile is-child box">
                         <div class="level">
@@ -25,6 +25,7 @@
                     </article>
                 </router-link>
             </div>
+            <p v-else>Fetching polls...</p>
         </div>
     </main>
 </template>
@@ -33,6 +34,11 @@
 import DoughnutChart from './chart';
 
 export default {
+    mounted() {
+        this.$store.dispatch('getPolls').then((response) => {
+            this.$store.commit('getPolls', response.body);
+        }).catch(e => console.log(e));
+    },
     computed: {
         polls() {
             return this.$store.state.polls;

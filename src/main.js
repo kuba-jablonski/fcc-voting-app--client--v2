@@ -13,14 +13,9 @@ const router = new VueRouter({
 	routes,
     mode: 'history'
 });
-
-
-store.dispatch('getPolls').then((response) => {
-    store.commit('getPolls', response.body);
     
-    new Vue({
-        el: '#app',
-        store, router,
-        render: h => h(App)
-    });
-}).catch(e => console.log(e));
+new Vue({
+    el: '#app',
+    store, router,
+    render: h => h(App)
+});
